@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package programmableLayer;
+
+option go_package = "./programmableLayer/programmableLayer;programmableLayer";
+
+// greeter
+service Greeter {
+  rpc SayHello (HelloRequest) returns (HelloReply);
+}
+
+message HelloRequest {
+  string name = 1;
+}
+
+message HelloReply {
+  string message = 1;
+}
+
+
+// send Fund request
+service FundTxHandler {
+  rpc SubmitFundRequest (FundRequest) returns (FundRequestReply);
+}
+
+message FundRequest {
+  string txHash = 1;
+  string btcAmount  = 2;
+  string runeId = 3;
+  string runeAmount = 4;
+}
+
+message FundRequestReply {
+  bool success = 1;
+  string error = 2;
+}
+
+// send mint request
+service MintTxHandler {
+  rpc SubmitMintRequest (MintRequest) returns (MintRequestReply);
+}
+
+message MintRequest {
+  string transferSignature = 1;
+  string calldataSignature = 2;
+  string mintAmount  = 3;
+  string publicKey = 4;
+  string userAddress = 5;
+  uint64 expiredAt = 6;
+  uint64 nonce = 7;
+}
+
+message MintRequestReply {
+  bool success = 1;
+  string error = 2;
+  uint64 trackId = 3;
+}
+
+// send claim request
+service ClaimTxHandler {
+  rpc SubmitClaimRequest (ClaimRequest) returns (ClaimRequestReply);
+}
+
+message ClaimRequest {
+  string calldataSignature = 1;
+  string mintAmount = 2;
+  string publicKey  = 3;
+  string userAddress = 4;
+  string expiredAt = 5;
+  uint64 nonce = 6;
+}
+
+message ClaimRequestReply {
+  bool success = 1;
+  string error = 2;
+}
