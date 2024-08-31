@@ -56,13 +56,17 @@ type RuneClient struct {
 }
 
 type EvmClient struct {
-	RpcUrl            string             `mapstructure:"rpcUrl"`
-	NetworkId         uint64             `mapstructure:"network"`
-	StartBlock        int64              `mapstructure:"startblock"`
-	BatchSize         int64              `mapstructure:"batchsize"`
-	InvoiceAddress    string             `mapstructure:"invoiceAddress"`
-	ContractAddresses *ContractAddresses `mapstructure:"contractAddresses"`
-	Enabled           bool               `mapstructure:"enabled"`
+	RpcUrl                 string             `mapstructure:"rpcUrl"`
+	NetworkId              uint64             `mapstructure:"network"`
+	StartBlock             int64              `mapstructure:"startblock"`
+	BatchSize              int64              `mapstructure:"batchsize"`
+	InvoiceAddress         string             `mapstructure:"invoiceAddress"`
+	ContractAddresses      *ContractAddresses `mapstructure:"contractAddresses"`
+	Enabled                bool               `mapstructure:"enabled"`
+	RyeContractAddress     string             `mapstructure:"ryeContractAddress"`
+	HarvestContractAddress string             `mapstructure:"harvestContractAddress"`
+	IndexerPrivateKey      string             `mapstructure:"indexerPrivateKey"`
+	IndexerAddress         string             `mapstructure:"indexerAddress"`
 }
 
 type ContractAddresses struct {
@@ -190,21 +194,9 @@ func New(mode string, absConfigPath string) *Config {
 		viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 		viper.AutomaticEnv() // todo: check why this is not working
 
-		viper.BindEnv("postgresql.host", "CONFIG_ENV_PG_HOST")
-		viper.BindEnv("postgresql.port", "CONFIG_ENV_PG_PORT")
-		viper.BindEnv("postgresql.user", "CONFIG_ENV_PG_USER")
-		viper.BindEnv("postgresql.password", "CONFIG_ENV_PG_PASSWORD")
-		viper.BindEnv("postgresql.database", "CONFIG_ENV_PG_DATABASE")
-		viper.BindEnv("postgresql.url", "CONFIG_ENV_PG_URL")
-		viper.BindEnv("btcRpcClient.host", "CONFIG_ENV_BTC_RPC_CLIENT_HOST")
-		viper.BindEnv("btcRpcClient.user", "CONFIG_ENV_BTC_RPC_CLIENT_USER")
-		viper.BindEnv("btcRpcClient.pass", "CONFIG_ENV_BTC_RPC_CLIENT_PASS")
-		viper.BindEnv("btcRpcClient.network", "CONFIG_ENV_BTC_RPC_CLIENT_NETWORK")
-		viper.BindEnv("btcRpcClient.startblock", "CONFIG_ENV_BTC_RPC_CLIENT_STARTBLOCK")
-		viper.BindEnv("btcRpcClient.batchsize", "CONFIG_ENV_BTC_RPC_CLIENT_BATCHSIZE")
-		viper.BindEnv("btcRpcClient.enabled", "CONFIG_ENV_BTC_RPC_CLIENT_ENABLED")
-		viper.BindEnv("btcRpcClient.quicknodeapi", "CONFIG_ENV_BTC_RPC_CLIENT_QUICKNODE_API")
-		viper.BindEnv("btcAttestorAddress", "CONFIG_BTC_ATTESTOR_ADDRESS")
+		viper.BindEnv("evmClient.indexerPrivateKey", "CONFIG_ENV_INDEXER_PRIVATE_KEY")
+		viper.BindEnv("evmClient.indexerAddress", "CONFIG_ENV_INDEXER_ADDRESS")
+		viper.BindEnv("evmClient.rpcUrl", "CONFIG_ENV_RPC")
 
 		if err := viper.Unmarshal(&instance); err != nil {
 			fmt.Printf("Error unmarshalling config: %s\n", err)

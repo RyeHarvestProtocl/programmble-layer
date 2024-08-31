@@ -3,3 +3,6 @@ mode: debug
 bust: 500
 env: "local"
 Port: "50051"
+EvmClient:
+  RyeContractAddress: 0x8a2cfCE8F205d7A94e9E09f056244e9553a361DF
+  HarvestContractAddress: 0x7Ea2399D474da64E10c1E3865066cF9769556B02

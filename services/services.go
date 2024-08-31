@@ -9,7 +9,8 @@ type BaseService[T any] struct {
 }
 
 func NewBaseService[T any](Db *gorm.DB) *BaseService[T] {
-	return &BaseService[T]{Db: Db}
+	return &BaseService[T]{Db: 
+		Db}
 }
 
 func (service *BaseService[T]) Create(item *T) error {

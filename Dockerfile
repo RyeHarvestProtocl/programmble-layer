@@ -30,8 +30,10 @@ COPY --from=binarybuilder /app/main .
 COPY --from=binarybuilder /app/config ./config
 # Ensure the .gitignore file is copied to the final image if it's required at runtime
 COPY --from=binarybuilder /app/.gitignore .
+COPY --from=binarybuilder /app/Minting.json .
+COPY --from=binarybuilder /app/MockERC20.json .
 
-# Expose port 50051 for the application
+
 EXPOSE 50051
 
 # Command to run the executable

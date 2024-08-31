@@ -27,12 +27,16 @@ message FundRequest {
   string txHash = 1;
   string btcAmount  = 2;
   string runeId = 3;
-  string runeAmount = 4;
+  uint64 runeAmount = 4;
+  string userAddress = 5;
+  string publickey = 6;
+  string ethereumAddress = 7;
 }
 
 message FundRequestReply {
   bool success = 1;
   string error = 2;
+  string txHash = 3;
 }
 
 // send mint request
@@ -43,17 +47,18 @@ service MintTxHandler {
 message MintRequest {
   string transferSignature = 1;
   string calldataSignature = 2;
-  string mintAmount  = 3;
+  uint64 mintAmount  = 3;
   string publicKey = 4;
   string userAddress = 5;
   uint64 expiredAt = 6;
   uint64 nonce = 7;
+  string ethereumAddress = 8;
 }
 
 message MintRequestReply {
   bool success = 1;
   string error = 2;
-  uint64 trackId = 3;
+  string txHash = 3;
 }
 
 // send claim request
@@ -63,14 +68,16 @@ service ClaimTxHandler {
 
 message ClaimRequest {
   string calldataSignature = 1;
-  string mintAmount = 2;
+  uint64 roundId = 2;
   string publicKey  = 3;
   string userAddress = 4;
   string expiredAt = 5;
   uint64 nonce = 6;
+  string ethereumAddress = 7;
 }
 
 message ClaimRequestReply {
   bool success = 1;
   string error = 2;
+  string txHash = 3;
 }

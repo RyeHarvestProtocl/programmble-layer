@@ -1,8 +1,10 @@
 package server
 
 import (
+	"fmt"
 	"log"
 
+	"github.com/RyeHarvestProtocol/programmable-layer/config"
 	"github.com/RyeHarvestProtocol/programmable-layer/programmableLayer"
 )
 
@@ -12,9 +14,9 @@ func Initialize(addr string) {
 }
 
 // StartServer starts the RPC server
-func StartServer(addr string) {
+func StartServer(addr string, c *config.Config) {
 	go func() {
-		programmableLayer.StartServer(addr)
+		programmableLayer.StartServer(addr, c)
 	}()
 }
 
@@ -25,15 +27,17 @@ func StopServer() {
 }
 
 func CreateServer(modes ...string) {
-	// mode := "" // Default mode
-	// if len(modes) > 0 {
-	// 	mode = modes[0] // Use the first mode if provided
-	// }
+	mode := "" // Default mode
+	if len(modes) > 0 {
+		mode = modes[0] // Use the first mode if provided
+	}
 
-	// c := config.New(mode, "")
+	c := config.New(mode, "")
+
+	fmt.Println("this is cccc: ", c)
 	// dbInstance := models.New(c)
 
 	// create rpc server
 	Initialize(":50051")
-	StartServer(":50051")
+	StartServer(":50051", c)
 }
